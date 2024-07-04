@@ -151,7 +151,7 @@ const Index = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       // Draw character
-      ctx.fillStyle = "blue";
+      ctx.fillStyle = "purple";
       ctx.fillRect(character.x - cameraOffsetX, character.y, character.width, character.height);
 
       // Draw platforms
