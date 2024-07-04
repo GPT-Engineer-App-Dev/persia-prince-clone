@@ -27,9 +27,11 @@ const Index = () => {
 
     // Platform properties
     const platforms = [
-      { x: 0, y: 550, width: 800, height: 50 },
+      { x: 0, y: 550, width: 1600, height: 50 }, // Extended platform
       { x: 200, y: 450, width: 100, height: 20 },
       { x: 400, y: 350, width: 100, height: 20 },
+      { x: 800, y: 450, width: 100, height: 20 }, // Additional platforms
+      { x: 1200, y: 350, width: 100, height: 20 },
     ];
 
     // Key press events
@@ -87,8 +89,6 @@ const Index = () => {
 
       // Boundary detection
       if (character.x < 0) character.x = 0;
-      if (character.x + character.width > canvas.width)
-        character.x = canvas.width - character.width;
       if (character.y + character.height > canvas.height) {
         character.y = canvas.height - character.height;
         character.dy = 0;
