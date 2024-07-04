@@ -32,6 +32,14 @@ const Index = () => {
       { x: 400, y: 350, width: 100, height: 20 },
       { x: 800, y: 450, width: 100, height: 20 }, // Additional platforms
       { x: 1200, y: 350, width: 100, height: 20 },
+      { x: 1400, y: 250, width: 100, height: 20 }, // New platform
+      { x: 1600, y: 150, width: 100, height: 20 }, // New platform
+    ];
+
+    // Obstacle properties
+    const obstacles = [
+      { x: 600, y: 500, width: 50, height: 50 },
+      { x: 1000, y: 500, width: 50, height: 50 },
     ];
 
     // Key press events
@@ -87,6 +95,22 @@ const Index = () => {
         }
       });
 
+      // Obstacle collision detection
+      obstacles.forEach((obstacle) => {
+        if (
+          character.x < obstacle.x + obstacle.width &&
+          character.x + character.width > obstacle.x &&
+          character.y < obstacle.y + obstacle.height &&
+          character.y + character.height > obstacle.y
+        ) {
+          // Reset character position on collision
+          character.x = 50;
+          character.y = 500;
+          character.dx = 0;
+          character.dy = 0;
+        }
+      });
+
       // Boundary detection
       if (character.x < 0) character.x = 0;
       if (character.y + character.height > canvas.height) {
@@ -96,7 +120,7 @@ const Index = () => {
       }
     };
 
-    // Draw character and platforms
+    // Draw character, platforms, and obstacles
     const draw = (cameraOffsetX) => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -108,6 +132,12 @@ const Index = () => {
       ctx.fillStyle = "green";
       platforms.forEach((platform) => {
         ctx.fillRect(platform.x - cameraOffsetX, platform.y, platform.width, platform.height);
+      });
+
+      // Draw obstacles
+      ctx.fillStyle = "red";
+      obstacles.forEach((obstacle) => {
+        ctx.fillRect(obstacle.x - cameraOffsetX, obstacle.y, obstacle.width, obstacle.height);
       });
     };
 
