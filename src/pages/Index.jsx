@@ -97,24 +97,28 @@ const Index = () => {
     };
 
     // Draw character and platforms
-    const draw = () => {
+    const draw = (cameraOffsetX) => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       // Draw character
       ctx.fillStyle = "blue";
-      ctx.fillRect(character.x, character.y, character.width, character.height);
+      ctx.fillRect(character.x - cameraOffsetX, character.y, character.width, character.height);
 
       // Draw platforms
       ctx.fillStyle = "green";
       platforms.forEach((platform) => {
-        ctx.fillRect(platform.x, platform.y, platform.width, platform.height);
+        ctx.fillRect(platform.x - cameraOffsetX, platform.y, platform.width, platform.height);
       });
     };
 
     // Game loop
     const loop = () => {
       update();
-      draw();
+
+      // Calculate camera offset
+      const cameraOffsetX = Math.max(0, character.x - canvas.width / 2);
+
+      draw(cameraOffsetX);
       requestAnimationFrame(loop);
     };
 
