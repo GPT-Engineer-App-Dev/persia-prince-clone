@@ -34,13 +34,24 @@ const Index = () => {
       { x: 1200, y: 350, width: 100, height: 20 },
       { x: 1400, y: 250, width: 100, height: 20 }, // New platform
       { x: 1600, y: 150, width: 100, height: 20 }, // New platform
+      { x: 1800, y: 100, width: 100, height: 20 }, // New platform
+      { x: 2000, y: 50, width: 100, height: 20 }, // New platform
     ];
 
     // Obstacle properties
     const obstacles = [
       { x: 600, y: 500, width: 50, height: 50 },
       { x: 1000, y: 500, width: 50, height: 50 },
+      { x: 1600, y: 100, width: 50, height: 50 }, // New obstacle
     ];
+
+    // Finish flag properties
+    const finishFlag = {
+      x: 2100,
+      y: 0,
+      width: 50,
+      height: 600,
+    };
 
     // Key press events
     const keys = {
@@ -111,6 +122,21 @@ const Index = () => {
         }
       });
 
+      // Finish flag detection
+      if (
+        character.x < finishFlag.x + finishFlag.width &&
+        character.x + character.width > finishFlag.x &&
+        character.y < finishFlag.y + finishFlag.height &&
+        character.y + character.height > finishFlag.y
+      ) {
+        alert("You win!");
+        // Reset character position on win
+        character.x = 50;
+        character.y = 500;
+        character.dx = 0;
+        character.dy = 0;
+      }
+
       // Boundary detection
       if (character.x < 0) character.x = 0;
       if (character.y + character.height > canvas.height) {
@@ -120,7 +146,7 @@ const Index = () => {
       }
     };
 
-    // Draw character, platforms, and obstacles
+    // Draw character, platforms, obstacles, and finish flag
     const draw = (cameraOffsetX) => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -139,6 +165,10 @@ const Index = () => {
       obstacles.forEach((obstacle) => {
         ctx.fillRect(obstacle.x - cameraOffsetX, obstacle.y, obstacle.width, obstacle.height);
       });
+
+      // Draw finish flag
+      ctx.fillStyle = "yellow";
+      ctx.fillRect(finishFlag.x - cameraOffsetX, finishFlag.y, finishFlag.width, finishFlag.height);
     };
 
     // Game loop
